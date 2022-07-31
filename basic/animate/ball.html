@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas - 保存图片</title>
+  <style>
+    /* 给画布增加一个阴影和圆角的样式 */
+    canvas {
+      box-shadow: 0px 0px 5px #ccc;
+      border-radius: 8px;
+      float: left;
+    }
+
+    img {
+      width: 500px;
+      height: 500px;
+      float: right;
+    }
+
+    button {
+      position: absolute;
+      top: 550px;
+      left: 50%;
+      margin-left: -40px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="500" height="500">
+    当前浏览器不支持canvas元素，请升级或更换浏览器！
+  </canvas>
+  <img id="img" src="https://t7.baidu.com/it/u=1819248061,230866778&fm=193&f=GIF" />
+  <button id="btn">转化为图片且下载</button>
+  <script>
+    // 获取 canvas 元素
+    var canvas = document.getElementById('canvas');
+    var Img = document.getElementById('img');
+    var Btn = document.getElementById('btn');
+    // 通过判断getContext方法是否存在来判断浏览器的支持性
+    if (canvas.getContext) {
+      // 获取绘图上下文
+      var ctx = canvas.getContext('2d');
+      var ball = {
+        x: 100,
+        y: 100,
+        vx: 1,
+        vy: 3,
+        radius: 25,
+        color: 'blue',
+        draw: function () {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+          ctx.closePath();
+          ctx.fillStyle = this.color;
+          ctx.fill();
+        }
+      };
+      function draw () {
+        // ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // 用带透明度的矩形代替清空
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ball.draw();
+        // 添加加速度
+        ball.vy *= .995;
+        ball.vy += .15;
+        // 添加速率
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        // 添加边界
+        if (ball.y + ball.vy > canvas.height || ball.y + ball.vy < 0) {
+          ball.vy = -ball.vy;
+        }
+        if (ball.x + ball.vx > canvas.width || ball.x + ball.vx < 0) {
+          ball.vx = -ball.vx;
+        }
+        window.requestAnimationFrame(draw);
+      }
+      window.requestAnimationFrame(draw);
+      ball.draw();
+    }
+    Btn.addEventListener('click', function () {
+      // 将canvas转换成base64的url
+      var url = canvas.toDataURL("image/png");
+      // 把Canvas 转化为图片
+      Img.src = url;
+      // 将base64转换为文件对象
+      var arr = url.split(",")
+
+      console.log(arr);
+      var mime = arr[0].match(/:(.*?);/)[1] // 此处得到的为文件类型
+      var bstr = atob(arr[1]) // 此处将base64解码
+      var n = bstr.length
+      var u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n); //charCodeAt() 方法返回 0 到 65535 之间的整数，表示给定索引处的 UTF-16 代码单元
+      }
+      // 通过以下方式将以上变量生成文件对象，三个参数分别为文件内容、文件名、文件类型
+      var file = new File([u8arr], "filename", { type: mime });
+      // 将文件对象通过a标签下载
+      var aDom = document.createElement("a"); // 创建一个 a 标签
+      aDom.download = file.name; // 设置文件名
+      let href = URL.createObjectURL(file); // 将file对象转成 UTF-16 字符串
+      aDom.href = href; // 放入href
+      document.body.appendChild(aDom); // 将a标签插入 body
+      aDom.click(); // 触发 a 标签的点击
+      document.body.removeChild(aDom); // 移除刚才插入的 a 标签
+      URL.revokeObjectURL(href); // 释放刚才生成的 UTF-16 字符串
+    });
+  </script>
+</body>
+
+</html>

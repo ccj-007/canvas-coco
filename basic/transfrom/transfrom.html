@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas - 绘制 - drawImage</title>
+  <style>
+    /* 给画布增加一个阴影和圆角的样式 */
+    canvas {
+      box-shadow: 0px 0px 5px #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="500" height="500">
+    当前浏览器不支持canvas元素，请升级或更换浏览器！
+  </canvas>
+  <script>
+    var canvas = document.getElementById('canvas');
+    if (canvas.getContext) {
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ee7034';
+
+      //save restore 类似快照的保存和回复，栈结构，如果要重新绘制一个图形，一般用closePath，但是元素变形的时候需要用快照
+      ctx.save();
+      ctx.save();
+
+      ctx.translate(100, 100); // x和y轴都移动了100
+      ctx.fillRect(0, 0, 100, 100);
+
+      ctx.restore();
+      ctx.rotate(Math.PI / 4); // 旋转了45度，Math.PI=180度
+      ctx.fillRect(0, 0, 100, 100);
+
+      ctx.restore();
+      ctx.scale(2, 1);
+      ctx.fillRect(100, 300, 100, 100);
+    }
+  </script>
+</body>
+
+</html>

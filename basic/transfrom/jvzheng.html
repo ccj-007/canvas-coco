@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas - 绘制 - drawImage</title>
+  <style>
+    /* 给画布增加一个阴影和圆角的样式 */
+    canvas {
+      box-shadow: 0px 0px 5px #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="500" height="500">
+    当前浏览器不支持canvas元素，请升级或更换浏览器！
+  </canvas>
+  <script>
+    /* transform(a, b, c, d, e, f)方法能将当前的变形矩阵乘上一个基于自身参数的矩阵；
+setTransform(a, b, c, d, e, f)方法会将当前变形矩阵重置为单位矩阵，然后用相同的参数调用 transform 方法
+resetTransform()方法为重置当前变形为单位矩阵。效果等同于调用 setTransform(1, 0, 0, 1, 0, 0)
+  */
+    var canvas = document.getElementById('canvas');
+    // 通过判断getContext方法是否存在来判断浏览器的支持性
+    if (canvas.getContext) {
+      // 获取绘图上下文
+      var ctx = canvas.getContext('2d');
+      // 
+      var sin = Math.sin(Math.PI / 6);
+      var cos = Math.cos(Math.PI / 6);
+      console.log("🚀 ~ cos, sin", cos, sin)
+      ctx.translate(250, 250);
+      var c = 0;
+      for (var i = 0; i <= 12; i++) {
+        c = Math.floor(255 / 12 * i);
+        ctx.fillStyle = `rgba(${c}, ${c}, ${c})`;
+        ctx.beginPath() // 开启路径
+        ctx.arc(60, 100, 100, 0, Math.PI * 2, false);
+        ctx.fill();
+
+        //矩阵
+        ctx.transform(cos, sin, -sin, cos, 0, 0);
+      }
+      // 绘制一个矩形
+      ctx.fillStyle = "rgba(255, 128, 255, 0.5)";
+      ctx.fillRect(0, 50, 100, 100);
+      // 上面绘制的矩形不是我们想要的没因为它带上了上面transform的属性
+      // 所以需要重置当前变形为单位矩阵
+      ctx.resetTransform()
+      ctx.fillStyle = "rgba(255, 128, 255, 0.5)";
+      ctx.fillRect(0, 50, 100, 100);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas - 绘制文本</title>
+  <style>
+    /* 给画布增加一个阴影和圆角的样式 */
+    canvas {
+      box-shadow: 0px 0px 5px #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="500" height="500">
+    当前浏览器不支持canvas元素，请升级或更换浏览器！
+  </canvas>
+  <script>
+    // 获取 canvas 元素
+    var canvas = document.getElementById('canvas');
+    // 通过判断getContext方法是否存在来判断浏览器的支持性
+    if (canvas.getContext) {
+      // 获取绘图上下文
+      var ctx = canvas.getContext('2d');
+      ctx.font = "50px serif"; // 设置文案大小和字体
+      ctx.strokeText("Canvas 详解", 50, 50);
+      ctx.fillText("Canvas 详解", 50, 50);
+
+      ctx.shadowColor = "#cccccc"; //  设置阴影颜色
+      ctx.fillStyle = "#ee7934"; //  设置填充颜色
+      ctx.shadowOffsetX = 10; // X轴上的阴影
+      ctx.shadowOffsetY = 10; // Y轴上的阴影
+      ctx.shadowBlur = 5; // 阴影的模糊程度
+
+      ctx.font = "30px serif"; // 设置文案大小和字体
+      ctx.direction = "ltr"; // 文本方向从左向右
+      ctx.textAlign = "left"; // 左对齐
+      ctx.strokeText("Hi Canvas !", 150, 100);
+      ctx.direction = "ltr"; // 文本方向从左向右
+      ctx.textAlign = "center"; // 右对齐
+      ctx.strokeText("Hi Canvas !", 150, 200);
+      ctx.direction = "ltr"; // 文本方向从左向右
+      ctx.textAlign = "right"; // 右对齐
+      ctx.strokeText("Hi Canvas !", 150, 300);
+      ctx.direction = "rtl"; // 文本方向从左向右
+      ctx.textAlign = "left"; // 左对齐
+      ctx.strokeText("Hi Canvas !", 150, 400);
+      ctx.direction = "rtl"; // 文本方向从左向右
+      ctx.textAlign = "center"; // 右对齐
+      ctx.strokeText("Hi Canvas !", 150, 500);
+      ctx.direction = "rtl"; // 文本方向从左向右
+      ctx.textAlign = "right"; // 右对齐
+
+      ctx.strokeText("Hi Canvas !", 150, 600);
+    }
+  </script>
+</body>
+
+</html>

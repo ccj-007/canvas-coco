@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas - 裁剪</title>
+  <style>
+    /* 给画布增加一个阴影和圆角的样式 */
+    canvas {
+      box-shadow: 0px 0px 5px #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="500" height="500">
+    当前浏览器不支持canvas元素，请升级或更换浏览器！
+  </canvas>
+  <script>
+    /*  
+      裁剪的作用是遮罩，用来隐藏不需要的部分，所有在路径以外的部分都不会在 canvas 上绘制出来。
+      裁剪的效果和 globalCompositeOperation 属性的 source-in 和 source-atop差不多，但也有区别，最重要的区别是裁剪路径不会在 canvas 上绘制东西，而且它永远不受新图形的影响。这些特性使得它在特定区域里绘制图形时特别好用。
+      语法：clip() 将当前正在构建的路径转换为当前的裁剪路径。
+      默认情况下，canvas 有一个与它自身一样大的裁剪路径（也就是没有裁剪效果）。现在可以通过clip()来创建一个裁剪路劲（也就有裁剪效果了）。
+    */
+    var canvas = document.getElementById('canvas');
+    // 通过判断getContext方法是否存在来判断浏览器的支持性
+    if (canvas.getContext) {
+      // 获取绘图上下文
+      var ctx = canvas.getContext('2d');
+      var img = new Image();
+      img.src = 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20191212%2F556cc408058d4c64a46468761406afe6.png&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660103116&t=8dd0c641e1e1890fa65ee80dfa428d34';
+      img.onload = function () {
+        // 创建圆形裁剪路径
+        // ctx.arc(250, 250, 200, 0, Math.PI * 2, false);
+        // ctx.clip();
+        // // 创建完后绘制
+        // ctx.drawImage(img, 0, 0, 500, 500);
+
+        //clip(path, fillRule)  //被剪切的PATH2d路径，自定义路径使用  fillRule路径内还是路径外裁剪 允许的值有 nonzero（默认值）：非零环绕原则，evenodd：奇偶环绕原则
+
+        ctx.arc(250, 250, 200, 0, Math.PI * 2, false);
+        var path1 = new Path2D();
+        path1.rect(100, 100, 300, 300);
+        ctx.clip(path1);
+        // 创建完后绘制
+        ctx.drawImage(img, 0, 0, 500, 500);
+      }
+    }
+  </script>
+</body>
+
+</html>

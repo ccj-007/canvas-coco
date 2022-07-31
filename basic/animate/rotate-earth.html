@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas - 太阳系</title>
+  <style>
+    /* 给画布增加一个阴影和圆角的样式 */
+    canvas {
+      box-shadow: 0px 0px 5px #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="500" height="500">
+    当前浏览器不支持canvas元素，请升级或更换浏览器！
+  </canvas>
+  <script>
+    /* 总结一下绘制动画的基本步骤
+      1.清空 canvas：除非接下来要画的内容会完全充满 canvas（例如背景图），否则需要清空所有。最简单的做法就是用 clearRect 方法。
+      2.保存 canvas 状态：如果要改变 canvas 状态的设置（样式，变形之类的），之后又要在每画一帧之时都是原始状态的情况时，需要先保存一下。
+                        绘制动画图形（animated shapes）
+      3.恢复 canvas 状态：如果已经保存了 canvas 的状态，可以先恢复它，然后重绘下一帧。
+  */
+
+    // 获取 canvas 元素
+    var canvas = document.getElementById('canvas');
+    // 通过判断getContext方法是否存在来判断浏览器的支持性
+    if (canvas.getContext) {
+      // 获取绘图上下文
+      var ctx = canvas.getContext('2d');
+      var sun = new Image();
+      var moon = new Image();
+      var earth = new Image();
+      function init () {
+        sun.src = 'https://img.lovepik.com/element/40097/4339.png_300.png';
+        moon.src = 'https://www.freepnglogos.com/uploads/moon-png/moon-png-annual-celestial-overview-simone-matthews-18.png';
+        earth.src = 'https://gd-filems.dancf.com/mcm79j/mcm79j/92054/b3162056-61ba-4ebd-8da1-fd98ce15a1cb31401764.png';
+        window.requestAnimationFrame(draw);
+      }
+      function draw () {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        ctx.globalCompositeOperation = 'destination-over';  //每次都覆盖上一层
+        // 清空画布
+        ctx.clearRect(0, 0, 500, 500);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        ctx.strokeStyle = 'rgba(0, 153, 255, 0.4)';
+        ctx.save(); // 第一次保存画布状态  每次样式、变形修改都要依照上次的保存
+        ctx.translate(250, 250); // 把原心移到画布中间
+        // 画一个地球
+        var time = new Date();
+        var earthDeg = ((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds()
+        ctx.rotate(earthDeg);
+        ctx.translate(200, 0);
+        ctx.drawImage(earth, -20, -20, 40, 40);
+        // 画一个月亮
+        var moonDeg = ((2 * Math.PI) / 6) * time.getSeconds() + ((2 * Math.PI) / 6000) * time.getMilliseconds()
+
+        ctx.rotate(moonDeg);
+        ctx.translate(0, 40);
+        ctx.drawImage(moon, -7.5, -7.5, 15, 15);
+        ctx.save(); // 第二次保存画布状态  每次样式、变形修改都要依照上次的保存
+
+        // 恢复状态
+        ctx.restore();
+        ctx.restore();
+
+        // 画一个地球运行的轨迹
+        ctx.beginPath();
+        ctx.arc(250, 250, 200, 0, Math.PI * 2, false);
+        ctx.stroke();
+        // 画一个太阳
+        ctx.drawImage(sun, 0, 0, 500, 500);
+        window.requestAnimationFrame(draw);
+      }
+      init();
+    }
+  </script>
+</body>
+
+</html>

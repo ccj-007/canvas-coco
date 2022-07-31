@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas - 绘制样式</title>
+  <style>
+    /* 给画布增加一个阴影和圆角的样式 */
+    canvas {
+      box-shadow: 0px 0px 5px #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="300" height="300">
+    当前浏览器不支持canvas元素，请升级或更换浏览器！
+  </canvas>
+  <script>
+    // 获取 canvas 元素
+    var canvas = document.getElementById('canvas');
+    // 通过判断getContext方法是否存在来判断浏览器的支持性
+    if (canvas.getContext) {
+      // 获取绘图上下文
+      var ctx = canvas.getContext('2d');
+      // lineJoin 值为 miter
+      ctx.beginPath()
+      ctx.lineWidth = 10;  //默认1
+      ctx.lineCap = 'round' // 设置线段端点显示的样子。可选值为：butt，round 和 square。默认是 butt。
+      ctx.lineJoin = 'miter'  //lineJoin 该属性可以设置两线段连接处所显示的样子。可选值为：round, bevel 和 miter。默认是 miter。
+      ctx.moveTo(50, 20);
+      ctx.lineTo(100, 60);
+      ctx.lineTo(150, 20);
+      ctx.lineTo(200, 60);
+      ctx.lineTo(250, 20);
+      ctx.stroke();
+      ctx.closePath();
+      // lineJoin 值为 round
+      ctx.beginPath()
+      ctx.lineWidth = 10;
+      ctx.lineJoin = 'round'
+      ctx.moveTo(50, 100);
+      ctx.lineTo(100, 140);
+      ctx.lineTo(150, 100);
+      ctx.lineTo(200, 140);
+      ctx.lineTo(250, 100);
+      ctx.stroke();
+      ctx.closePath();
+      // lineJoin 值为 bevel
+      ctx.beginPath()
+      ctx.lineWidth = 10;
+      ctx.lineJoin = 'bevel'
+      ctx.miterLimit = 10   //限制尖角部位的长度，如果超过则为bevel, 平角样式
+      ctx.setLineDash([5, 10, 20, 40]);   //设置虚线样式
+      console.log(ctx.getLineDash()); // [5, 10, 20, 40]
+      ctx.lineDashOffset = 3;  //虚线样式的起始偏移量
+      ctx.globalAlpha = 0.5;
+
+      ctx.moveTo(50, 180);
+      ctx.lineTo(100, 220);
+      ctx.lineTo(150, 180);
+      ctx.lineTo(200, 220);
+      ctx.lineTo(250, 180);
+      ctx.stroke();
+      ctx.closePath();
+    }
+  </script>
+</body>
+
+</html>
