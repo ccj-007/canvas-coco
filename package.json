@@ -1,0 +1,20 @@
+{
+  "name": "canvas-coco",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccj-007/canvas-coco.git"
+  },
+  "keywords": [],
+  "author": "chase chen <596487930@qq.com> (https://github.com/ccj-007)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ccj-007/canvas-coco/issues"
+  },
+  "homepage": "https://github.com/ccj-007/canvas-coco#readme"
+}

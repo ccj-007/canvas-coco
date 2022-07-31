@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./libgif.js"> </script>
+  <script src="./rubbable.js"> </script>
+</head>
+
+<body>
+  <div class="box">
+    <img src="../img/star.gif" alt="" class="star">
+  </div>
+  <script>
+    //https://github.com/buzzfeed/libgif-js    rubbableGif控制gif的动画
+
+    let gif = document.querySelector('.star')
+    let box = document.querySelector('.box')
+
+    gif.onload = () => {
+      let rubbableGif = new RubbableGif({
+        gif: gif,
+        on_end: () => {
+          console.log("加载完毕");
+        },
+        // loop_mode: false,
+        auto_play: false,  //是否自动播放
+        loop_delay: 2000, //对动画做延迟结束
+        progressbar_height: 0,
+        rubbable: true
+      })
+      console.log(rubbableGif);
+      rubbableGif.load()  //加载canvas的gif动画
+
+      setTimeout(() => {
+        rubbableGif.play()
+      }, 1000);
+
+      setTimeout(() => {
+        rubbableGif.pause()
+        rubbableGif.move_to(10)
+      }, 2000);
+    }
+
+    // const createGif = () => {
+    //   let img = document.createElement('img')
+    //   img.src = '../img/star.gif'
+    //   box.appendChild(img)
+    // }
+    // setTimeout(() => {
+    //   box.removeChild(gif)
+
+    //   setTimeout(() => {
+    //     createGif()
+    //   }, 1000);
+    // }, 1000);
+  </script>
+</body>
+
+</html>
