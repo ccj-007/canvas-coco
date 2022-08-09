@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style lang="">
+  #mycanvas {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #000;
+  }
+</style>
+
+<body>
+  <canvas id="mycanvas"></canvas>
+  <script>
+    let canvas = document.getElementById('mycanvas')
+    let ctx = canvas.getContext('2d')
+    canvas.width = 300
+    canvas.height = 300
+    let x = 100, y = 100, r = 100
+    let status = 'right'
+
+    function animate () {
+      ctx.clearRect(0, 0, 300, 300)
+
+      ctx.beginPath()
+      ctx.arc(x, y, r, 0, Math.PI * 2)
+      ctx.closePath()
+      ctx.fill()
+
+      if (status === 'right') {
+        x++
+        r--
+        if (x === 200) {
+          status = 'left'
+        }
+      }
+
+      if (status === 'left') {
+        x--
+        r++
+        if (x === 100) {
+          status = 'right'
+        }
+      }
+
+      requestAnimationFrame(animate)
+    }
+    animate()
+  </script>
+</body>
+
+</html>

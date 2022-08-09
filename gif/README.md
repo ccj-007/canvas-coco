@@ -1,3 +1,6 @@
+
+# 通过canvas处理gif动画来控制暂停、播放、帧等
+
 ## 构造函数选项  
 gif - 必需。img 标签的 DOM 元素。  
 loop_mode - 可选。将此设置为 false 将强制禁用 gif 循环。  
