@@ -9,15 +9,39 @@
 
   <style lang="">
     #canvas1 {
+      position: relative;
       width: 800px;
-      height: 700px;
-      border: 1px solid black
+      height: 500px;
+      border: 1px solid black;
+    }
+
+    #container {
+      position: relative;
+      width: 800px;
+      height: 500px;
+    }
+
+
+    #content {
+      width: 800px;
+      position: absolute;
+      z-index: 2;
+      bottom: 0;
+      left: 0;
+      color: #fff;
     }
   </style>
 </head>
 
 <body>
-  <canvas id="canvas1"></canvas>
+  <div id="container">
+    <canvas id="canvas1"></canvas>
+
+    <div id="content">
+      <p>Game Speed: <span id="showGameSpeed"></span></p>
+      <input type="range" class="slider" id="'slider" value="5" min="0" max="20" style="width: 800px">
+    </div>
+  </div>
 
   <script src="./script.js">
   </script>
