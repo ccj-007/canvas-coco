@@ -59,7 +59,6 @@ class Raven {
     }
   }
   draw () {
-    //绘制颜色
     collisionCtx.fillStyle = this.color
     collisionCtx.fillRect(this.x, this.y, this.width, this.height)
 
